@@ -1,1 +1,48 @@
+name: 6 Job Pipeline
 
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Job1 completed"
+
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Job2 depends on Job1"
+
+  job3:
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Job3 depends on Job1"
+
+  job4:
+    runs-on: ubuntu-latest
+    needs: job2
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Job4 depends on Job2"
+
+  job5:
+    runs-on: ubuntu-latest
+    needs: job3
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Job5 depends on Job3"
+
+  job6:
+    runs-on: ubuntu-latest
+    needs: [job4, job5]
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Job6 depends on Job4 and Job5"
